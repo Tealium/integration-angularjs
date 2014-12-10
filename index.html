@@ -15,17 +15,19 @@
 
   
 </head>
-<body ng-app="includeExample">
+<body ng-app="App">
 
-   <div ng-controller="ExampleController">
+   <div ng-controller="AppController">
 
-   <select ng-model="template" ng-options="t.name for t in templates">
+   <select ng-model="template" ng-options="t.name for t in templates" ng-change="updatePath()">
     <option value="">(blank)</option>
    </select>
    url of the template: <tt>{{template.url}}</tt>
    <hr/>
    <div class="slide-animate-container">
-     <div class="slide-animate" ng-include="template.url" onload="tealiumView()"></div>
+     <div ng-view class="slide-animate">
+       <div  ng-include="template.url" onload="tealiumView()"></div>
+     </div>
    </div>
 
  </div>

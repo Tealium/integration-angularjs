@@ -1,26 +1,27 @@
 angular.module('TealiumUDO', [])
-   .value('tealium_udo', {
-      udo: {
-       'home' : {
-         description : 'home',
-         data : {
-           init : function(data) {
-             var self = udo;
-             self.key1 = Date();
-             self.key2 = "test";
-             
+   .factory('tealium_udo', ['$location', function($location){
+      var get_udo = function(config) {
+          var view_id = config.view_id;
+          var data_connector = config.data_connector;
+          
+          var udo = {
+           '/template1.html' : {
+              description : "home",
+              data: {
+                "date" : Date(),
+                "key"  :"value"
+              }
+           },
+            '/template2.html' : {
+             description : 'product',
+             data : {
+                'location' : $location.path(),
+                "key2"  : "value2"
+             }
            }
-         }
-       },
-        '/my/path/product.html' : {
-         description : 'product',
-         data : {
-           init : function(data) {
-             var self = udo;
-             self.key1 = Date();
-             self.key2 = "test";
-           }
-         }
-       }
-     },
-   });
+         };
+         
+         return udo[view_id];
+      }
+      return get_udo;
+   }]);
