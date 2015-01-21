@@ -1,4 +1,4 @@
- angular.module('TealiumConfigure', [])
+angular.module('TealiumConfigure', [])
   .factory('tealium_configure', ["$location", function($location){
       return function() {
         // import any modules and setup here for view_id and data_connector
@@ -39,7 +39,7 @@
          udo = tealium_udo(config) ? tealium_udo(config)["data_connector"] : {};
          if (window.utag){
            utag.view(udo);
-           angular.element(document.querySelectorAll(tealium_configure().uiSelectors))
+           angular.element(document.querySelectorAll(config.ui_selectors))
              .bind('click', function(e) {
                link(udo, e);
              });
