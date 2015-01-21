@@ -46,7 +46,7 @@
          udo = tealium_udo(tealium_configure()) ? tealium_udo(tealium_configure())["data"] : {};
          if (window.utag){
          utag.view(udo);
-         angular.element(document.querySelectorAll(tealium_configure().uiSelectors))
+         angular.element(document.querySelectorAll(tealium_configure().ui_selectors))
            .bind('click', function(e) {
              link(udo, e);
            });
