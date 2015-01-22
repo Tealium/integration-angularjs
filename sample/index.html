@@ -18,7 +18,7 @@
 <body ng-app="App">
 
    <div ng-controller="AppController">
-
+    
    <select ng-model="template" ng-options="t.name for t in templates" ng-change="updatePath()">
     <option value="">(blank)</option>
    </select>
@@ -26,7 +26,7 @@
    <hr/>
    <div class="slide-animate-container">
      <div ng-view class="slide-animate">
-       <div  ng-include="template.url" onload="tealiumView()"></div>
+       <div  ng-include="template.url"></div>
      </div>
    </div>
 

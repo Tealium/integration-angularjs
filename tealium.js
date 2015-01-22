@@ -2,14 +2,17 @@ angular.module('TealiumConfigure', [])
   .factory('tealium_configure', ["$location", function($location){
       return function() {
         // import any modules and setup here for view_id and data_connector
-        
-        this.view_id = $location.path();            // place reference or function to return unique key for current view
+        var view_id = $location.path();
+        view_id = !(/undefined|^$/i).test(view_id) ? view_id : '/template1.html'; // fall back in case $location.path() isnt ready
+         
+        this.view_id = view_id;            // place reference or function to return unique key for current view
+
         this.data_connector  = {};                  // place reference or function to return data model
         this.ui_selectors    = '.trackable, input'; // elements to be autotracked *this is a sample*
         this.account     = "tealiummobile";         // add tealium account name
         this.profile     = "demo";                  // add profile name to use
         this.environment = "dev";                   // add target environment to use
-        this.suppress_first_view = false;           // set to true if you are calling view for app load yourself
+        this.suppress_first_view = true;           // true means utag.view() is not fired when library is loaded initially
         
 // DO NOT EDIT BELOW THIS LINE ---------------------------------------------------------            
       };
@@ -21,6 +24,7 @@ angular.module('TealiumConfigure', [])
    .factory('tealium', ['tealium_configure', 'tealium_udo', function(tealium_configure, tealium_udo) {
       var config = new tealium_configure();
       var link = function(udo, e) {
+         var config = new tealium_configure();
          var b = {};
          angular.forEach(udo, function(value, key) {
            b[key] = value;
@@ -36,7 +40,8 @@ angular.module('TealiumConfigure', [])
        };
 
       var view = function() {
-         udo = tealium_udo(config) ? tealium_udo(config)["data_connector"] : {};
+         var config = new tealium_configure();
+         var udo = tealium_udo(config);
          if (window.utag){
            utag.view(udo);
            angular.element(document.querySelectorAll(config.ui_selectors))
