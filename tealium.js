@@ -23,7 +23,6 @@ angular.module('TealiumConfigure', [])
  angular.module('TealiumHelper', ['TealiumUDO', 'TealiumConfigure'])
    .factory('tealium', ['tealium_configure', 'tealium_udo', function(tealium_configure, tealium_udo) {
       var config = new tealium_configure();
-      var config = new tealium_configure();
       var link = function(udo, e) {
         var config = new tealium_configure();
         var b = {},target = e.target, event_type, event_text, event_source;
