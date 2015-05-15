@@ -23,21 +23,51 @@ angular.module('TealiumConfigure', [])
  angular.module('TealiumHelper', ['TealiumUDO', 'TealiumConfigure'])
    .factory('tealium', ['tealium_configure', 'tealium_udo', function(tealium_configure, tealium_udo) {
       var config = new tealium_configure();
+      var config = new tealium_configure();
       var link = function(udo, e) {
-         var config = new tealium_configure();
-         var b = {};
-         angular.forEach(udo, function(value, key) {
-           b[key] = value;
-         });
-         if (e.target.attributes['data-tealium']) {
-           var custom_data = e.target.attributes['data-tealium'].value;
-           custom_data = JSON.parse(custom_data);
-           angular.forEach(custom_data, function(value, key) {
-             b[key] = value;
-           });
-         }
-         utag.link(b);
-       };
+        var config = new tealium_configure();
+        var b = {},target = e.target, event_type, event_text, event_source;
+        angular.forEach(udo, function(value, key) {
+          b[key] = value;
+        });
+
+        if(target.nodeName) {
+          event_type = "" + (target.nodeName.toLowerCase() || target.localName || target.tagName.toLowerCase());
+          if(event_type === "a") {
+            event_type = "link";
+          }else if (event_type == "img") {
+            event_type = "image";
+          }
+          b['event_type'] = event_type + " click";
+        }
+        b['event_target'] = event_type;
+        event_text = target.title || target.innerText || target.innerHTML.trim();
+        if(event_text === "" && (target.value && target.value !== "")) {
+          event_text = target.value;
+        }else if(event_text === "" && (target.alt && target.alt !== "")) {
+          event_text = target.alt;
+        }
+        b['event_attr1'] = event_text;
+        if(event_type === "link") {
+          event_source = target.href;
+        }else if (event_type === "button") {
+          event_source = target.type || "";
+        }else if (event_type === "input") {
+          event_source = target.value || "";
+        }else if (target.src && target.src !== "") {
+          event_source = target.src;
+        }
+        b['event_attr2'] = event_source;
+
+        if(target.attributes['data-tealium']) {
+          var custom_data = target.attributes['data-tealium'].value;
+          custom_data = JSON.parse(custom_data);
+          angular.forEach(custom_data, function(value, key) {
+            b[key] = value;
+          });
+      }
+      utag.link(b);
+    };
 
       var view = function() {
          var config = new tealium_configure();
