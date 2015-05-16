@@ -23,7 +23,7 @@ angular.module('TealiumConfigure', [])
  angular.module('TealiumHelper', ['TealiumUDO', 'TealiumConfigure'])
    .factory('tealium', ['tealium_configure', 'tealium_udo', function(tealium_configure, tealium_udo) {
       var config = new tealium_configure();
-      var link = function(udo, e) {
+      var link = function(udo) {
          var config = new tealium_configure();
          var b = {};
          angular.forEach(udo, function(value, key) {
