@@ -29,13 +29,7 @@ angular.module('TealiumConfigure', [])
          angular.forEach(udo, function(value, key) {
            b[key] = value;
          });
-         if (e.target.attributes['data-tealium']) {
-           var custom_data = e.target.attributes['data-tealium'].value;
-           custom_data = JSON.parse(custom_data);
-           angular.forEach(custom_data, function(value, key) {
-             b[key] = value;
-           });
-         }
+
          utag.link(b);
        };
 
@@ -46,7 +40,8 @@ angular.module('TealiumConfigure', [])
            utag.view(udo);
            angular.element(document.querySelectorAll(config.ui_selectors))
              .bind('click', function(e) {
-               link(udo, e);
+               var udo = tealium_udo(config, e);
+               link(udo);
              });
          }
        };
