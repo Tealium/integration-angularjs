@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Angularjs tealiumiq-module by patrickmcwilliams</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Angularjs tealiumiq-module</h1>
+        <p>angularJS module for adding tealiumIQ support</p>
+
+        <p class="view"><a href="https://github.com/patrickmcwilliams/angularJS_tealiumIQ-module">View the Project on GitHub <small>patrickmcwilliams/angularJS_tealiumIQ-module</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/patrickmcwilliams/angularJS_tealiumIQ-module/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/patrickmcwilliams/angularJS_tealiumIQ-module/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/patrickmcwilliams/angularJS_tealiumIQ-module">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a id="angularjs-tealiumiq-integration" class="anchor" href="#angularjs-tealiumiq-integration" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>angularJS TealiumIQ integration</strong>
+</h2>
+
+<hr>
+
+<p>This is a sample module to integrate tealiumIQ into your site easily. 
+The main libraries for tealium are:</p>
+
+<ul>
+<li><strong>tealium.js</strong></li>
+<li><strong>tealium_data.js</strong></li>
+</ul>
+
+<p>tealium.js - contains the main logic to be called when a route updates or an element who's selector has been added to the config is clicked.</p>
+
+<p>tealium_data.js - contains the data object that references each page that you define.</p>
+
+<hr>
+
+<hr>
+
+<h3>
+<a id="sample-usage" class="anchor" href="#sample-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Sample usage</strong>
+</h3>
+
+<hr>
+
+<p>In your app module add the 'TealiumHelper' dependency
+example: </p>
+
+<pre><code>app = angular.module('app', ['TealiumHelper']);
+</code></pre>
+
+<p>In your application controller, call tealium.view() in a listener for any given event:</p>
+
+<pre><code> app.controller('appController', 
+    function($scope, tealium) {
+    ...
+     $scope.$on("$includeContentLoaded", // any broadcast event to listen for
+        function () {
+            tealium.view();
+        });
+    ...
+    }
+ );
+</code></pre>
+
+<p>** Another alternative is to declare a function in the current scope and call it inline when an element loads</p>
+
+<pre><code> app.controller('appController', 
+    function($scope, tealium) {
+    ...
+     $scope.tealiumView = tealium.view;
+    ...
+    }
+ );
+</code></pre>
+
+<p>You can then use tealiumView() anywhere thats within scope of your app controller to fire a tealium view, effectively simulating a page view event.
+example:</p>
+
+<pre><code>&lt; body ng-app="App" &gt;
+...
+   &lt; div class="slide-animate-container" &gt;
+     &lt; div ng-view class="slide-animate" &gt;
+     ...
+       &lt; div ng-include="template.url" onload= "tealiumView()" &gt;&lt; /div &gt;
+     &lt; /div &gt;
+   &lt; /div &gt;
+
+ &lt; /div &gt;
+&lt; /body &gt;
+</code></pre>
+
+<p>** These are only sample methods to implement, choose whichever meets your apps needs the best.</p>
+
+<h4>
+<a id="configuring-the-tealium-module" class="anchor" href="#configuring-the-tealium-module" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Configuring the Tealium Module</strong>
+</h4>
+
+<h5>
+<a id="tealiumconfigure" class="anchor" href="#tealiumconfigure" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>TealiumConfigure</strong>
+</h5>
+
+<p>In <strong>tealium.js</strong> the following items need to be edited. In the '<strong>TealiumConfigure</strong>' module there are the following items</p>
+
+<ul>
+<li>
+<strong>this.uiSelectors</strong> - (String) CSS selectors for elements you want to add automatic link tracking to. (example:  '.trackable, input')</li>
+<li>
+<strong>this.view_id</strong> - (String reference) an object that is a reference or function that returns a unique key for the current view. This key will match the view keys in the 'TealiumUDO' module </li>
+<li>
+<strong>this.data_connector</strong> - (Object) an object representing a set of data that you want to pass to the 'TealiumUDO' module to ingest.</li>
+<li>
+<strong>this.account</strong> (String) tealiumIQ account</li>
+<li>
+<strong>this.profile</strong> (String) tealiumIQ profile</li>
+<li>
+<strong>this.environment</strong> (String) tealiumIQ environment ("dev", "qa", "prod")</li>
+<li>
+<p><strong>this.suppress_first_view</strong> (bool) true disables the default utag.view() track call by default when the library loads</p>
+
+<h5>
+<a id="tealiumudo" class="anchor" href="#tealiumudo" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>TealiumUDO</strong>
+</h5>
+
+<p>In <strong>tealium_data.js</strong> the following items need to be edited. In the '<strong>TealiumUDO</strong>' module there is a view_id_map object that are a set of key:value pairs. </p>
+</li>
+<li><p>The keys are strings that match the view_id being passed from '<strong>TealiumConfigure</strong>'</p></li>
+<li>The values are references to closures which return an object literal that matches the page type of the view_id
+For every key in view_id_map the closure references need to exist such that they are:</li>
+<li>An anonymous function</li>
+<li>return an object literal with all data that needs to be exposed for the page type associated with the view_id</li>
+</ul>
+
+<p><br><br><br>
+<strong>In this repo is a set of very simple files to test the plugin</strong></p>
+
+<p>**<a href="http://plnkr.co/edit/3qQNwf1eOi4SfnDT3IPg">http://plnkr.co/edit/3qQNwf1eOi4SfnDT3IPg</a> a plunker to test the files</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/patrickmcwilliams">patrickmcwilliams</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
