@@ -1,7 +1,7 @@
 angular.module('TealiumUDO', [])
    .factory('tealium_udo', ['$location', function($location){
-      return function(config) {
-          udo = {};
+      return function(config, e) {
+          var udo = {};
           try {
             var view_id = config.view_id;
             var data_connector = config.data_connector;
@@ -60,6 +60,52 @@ angular.module('TealiumUDO', [])
           }
           
           if (udo && typeof udo == "object"){
+            if (e){
+               var target = e.target, event_type, event_text, event_source;
+               if(target.nodeName) {
+                  event_type = "" + (target.nodeName.toLowerCase() || target.localName || target.tagName.toLowerCase());
+                  if(event_type === "a") {
+                     event_type = "link";
+                  }
+                  else if (event_type == "img") {
+                     event_type = "image";
+                  }
+                  udo['event_type'] = event_type + " click";
+               }
+               udo['event_target'] = event_type;
+               event_text = target.title || target.innerText || target.innerHTML.trim();
+               if(event_text === "" && (target.value && target.value !== "")) {
+                  event_text = target.value;
+               }else if(event_text === "" && (target.alt && target.alt !== "")) {
+                  event_text = target.alt;
+               }
+               udo['event_attr1'] = event_text;
+               switch(event_type){
+                  case "link":
+                     event_source = target.href;
+                     break;
+                  case "button":
+                     event_source = target.type || "";
+                     break;
+                  case "input":
+                     event_source = target.value || "";
+                     break;
+                  default:
+                     if (target.src && target.src !== "") {
+                        event_source = target.src;
+                     }
+                     break;
+               }
+               udo['event_attr2'] = event_source;
+               
+               if (target.attributes['data-tealium']) {
+                  var custom_data = target.attributes['data-tealium'].value;
+                  custom_data = JSON.parse(custom_data);
+                  angular.forEach(custom_data, function(value, key) {
+                     udo[key] = value;
+                  });
+               }
+            }
             return udo;
           }
           else {
