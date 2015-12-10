@@ -12,6 +12,7 @@ In your app module add the 'TealiumHelper' dependency example:
 ```javascript
 app = angular.module('app', ['TealiumHelper']);
 ```
+###Option 1
 In your application controller add the following function to its scope example:
 ```javascript
 app.controller('appController', 
@@ -33,12 +34,13 @@ You can then use tealiumView() anywhere thats within scope of your app controlle
  < /div >
 < /body >
 ```
-or alternatively you can include the TealiumHelper module in your route logic and call tealium.view() in your $routeChangeSuccess callback example:
+###Option 2
+Alternatively you can include the TealiumHelper module in your route logic and call tealium.view() in your $includeContentLoaded callback example:
 ```javascript
-$rootScope.$on("$routeChangeSuccess", 
-  function (event, current, previous, rejection) {
-    tealium.view();
-  });
+$scope.$on("$includeContentLoaded", 
+    function () {
+      tealium.view();
+    });
 ```
 
 ##Configuring the Tealium Module
