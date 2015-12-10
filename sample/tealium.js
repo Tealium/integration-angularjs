@@ -42,13 +42,22 @@ angular.module('TealiumConfigure', [])
       var view = function() {
          var config = new tealium_configure();
          var udo = tealium_udo(config);
-         if (window.utag){
+         var maxWait = 5000;
+         var waitForUtag = function() {
+          if(typeof window.utag == "undefined" && maxWait > 0) {
+            maxWait-=100;
+            setTimeout(waitForUtag,100);
+          } else if (maxWait <= 0) {
+            return;
+          } else {
            utag.view(udo);
            angular.element(document.querySelectorAll(config.ui_selectors))
              .bind('click', function(e) {
                link(udo, e);
-             });
-         }
+             }); 
+          }
+         };
+         waitForUtag();
        };
 
       return {"view": view};
