@@ -1,3 +1,21 @@
+##Forked version
+This forked repository modifies Tealium's Angular services to use the Provider pattern.
+Providers have the advantage of being available in an application's config block, meaning tealium.js and tealium_data.js do not need to be modified directly. For example:
+```javascript
+app.config(function(tealium_udoProvider, tealiumProvider) {
+  tealium_udoProvider.set_udo({
+    var1: 'a',
+    var2: 1
+  });
+  tealium_provider.set_account('TestAccount');
+  tealium_provider.set_profile('TestProfile');
+  ...
+});
+```
+
+TODO: Testing  
+
+
 #angularJS TealiumIQ integration
 This is a sample module to integrate tealiumIQ into your site easily. The main libraries for tealium are:
 
@@ -15,7 +33,7 @@ app = angular.module('app', ['TealiumHelper']);
 ###Option 1
 In your application controller add the following function to its scope example:
 ```javascript
-app.controller('appController', 
+app.controller('appController',
     function($scope, tealium) {
      $scope.tealiumView = tealium.view;
     }
@@ -37,7 +55,7 @@ You can then use tealiumView() anywhere thats within scope of your app controlle
 ###Option 2
 Alternatively you can include the TealiumHelper module in your route logic and call tealium.view() in your $includeContentLoaded callback example:
 ```javascript
-$scope.$on("$includeContentLoaded", 
+$scope.$on("$includeContentLoaded",
     function () {
       tealium.view();
     });
