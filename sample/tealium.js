@@ -1,88 +1,70 @@
-angular.module('TealiumConfigure', [])
-  .factory('tealium_configure', ["$location", function($location){
-      return function() {
-        // import any modules and setup here for view_id and data_connector
-        var view_id = $location.path();
-        view_id = !(/undefined|^$/i).test(view_id) ? view_id : '/template1.html'; // fall back in case $location.path() isnt ready
-         
-        this.view_id = view_id;            // place reference or function to return unique key for current view
+var app = angular.module('TealiumHelper', ['TealiumHelper.data']);
 
-        this.data_connector  = {};                  // place reference or function to return data model
-        this.ui_selectors    = '.trackable, input'; // elements to be autotracked *this is a sample*
-        this.account     = "tealiummobile";         // add tealium account name
-        this.profile     = "demo";                  // add profile name to use
-        this.environment = "dev";                   // add target environment to use
-        this.suppress_first_view = true;           // true means utag.view() is not fired when library is loaded initially
-        
-// DO NOT EDIT BELOW THIS LINE ---------------------------------------------------------            
-      };
-    }
-  ]);
+app.provider('tealium', function(tealiumDataProvider) {
+  var config = {
+    account: '',
+    profile: '',
+    environment: 'dev',
+    suppress_first_view: true,
+    ui_selectors: ''
+  };
 
- 
- angular.module('TealiumHelper', ['TealiumUDO', 'TealiumConfigure'])
-   .factory('tealium', ['tealium_configure', 'tealium_udo', function(tealium_configure, tealium_udo) {
-      var config = new tealium_configure();
-      var link = function(udo, e) {
-         var config = new tealium_configure();
-         var b = {};
-         angular.forEach(udo, function(value, key) {
-           b[key] = value;
-         });
-         if (e.target.attributes['data-tealium']) {
-           var custom_data = e.target.attributes['data-tealium'].value;
-           custom_data = JSON.parse(custom_data);
-           angular.forEach(custom_data, function(value, key) {
-             b[key] = value;
-           });
-         }
-         utag.link(b);
-       };
+  return {
+    config: function(newConfig) {
+      config = newConfig;
+    },
+    setViewIdMap: tealiumDataProvider.setViewIdMap,
+    $get: function(tealiumData, $location) {
+      // replaced with tealium_directive
+      // var link = function(udo) {
+      //   var b = {};
+      //   angular.forEach(udo, function(value, key) {
+      //     b[key] = value;
+      //   });
+      //   window.utag.link(b);
+      // };
 
       var view = function() {
-         var config = new tealium_configure();
-         var udo = tealium_udo(config);
-         var maxWait = 5000;
-         var waitForUtag = function() {
-          if(typeof window.utag == "undefined" && maxWait > 0) {
-            maxWait-=100;
-            setTimeout(waitForUtag,100);
-          } else if (maxWait <= 0) {
-            return;
-          } else {
-           utag.view(udo);
-           angular.element(document.querySelectorAll(config.ui_selectors))
-             .bind('click', function(e) {
-               link(udo, e);
-             }); 
+        var udo = tealiumData.getUdo($location.path());
+        if (window.utag){
+          window.utag.view(udo);
+          // replaced by tealium_directive
+          // if (config.ui_selectors) {
+          //   angular.element(document.querySelectorAll(config.ui_selectors))
+          //     .bind('click', function(e) {
+          //       var udo = tealiumData.getUdo($location.path(), e);
+          //       link(udo);
+          //     });
+          // }
+        }
+      };
+
+      return {
+        view: view,
+        run: function() {
+          if (config.suppress_first_view){
+            window.utag_cfg_ovrd = {noview : true};
           }
-         };
-         waitForUtag();
-       };
-
-      return {"view": view};
-              
-   }])
-   .run(function(tealium_configure) {
-     // like main when class is called
-     var config = new tealium_configure();
-     if (config.suppress_first_view){
-       window.utag_cfg_ovrd = {noview : true};
-     }
-     (function(a, b, c, d) {
-       a = '//tags.tiqcdn.com/utag/'
-        + config.account
-        +'/'+ config.profile
-        +'/'+ config.environment
-        +'/utag.js';
-       b = document;
-       c = 'script';
-       d = b.createElement(c);
-       d.src = a;
-       d.type = 'text/java' + c;
-       d.async = true;
-       a = b.getElementsByTagName(c)[0];
-       a.parentNode.insertBefore(d, a);
-     })();
-
-   });
+          (function(a, b, c, d) {
+            a = '//tags.tiqcdn.com/utag/'+
+            config.account + '/'+
+            config.profile +'/'+
+            config.environment +
+            '/utag.js';
+            b = document;
+            c = 'script';
+            d = b.createElement(c);
+            d.src = a;
+            d.type = 'text/java' + c;
+            d.async = true;
+            a = b.getElementsByTagName(c)[0];
+            a.parentNode.insertBefore(d, a);
+          })();
+        }
+      };
+    }
+  };
+});
+app.run(function(tealium) {
+  tealium.run();
+});
