@@ -2,18 +2,33 @@
 This forked repository modifies Tealium's Angular services to use the Provider pattern.
 Providers have the advantage of being available in an application's config block, meaning tealium.js and tealium_data.js do not need to be modified directly. For example:
 ```javascript
-app.config(function(tealium_udoProvider, tealiumProvider) {
-  tealium_udoProvider.set_udo({
-    var1: 'a',
-    var2: 1
+app.config(function(tealiumProvider) {
+  tealiumProvider.config({
+    account: 'tealiummobile',
+    profile: 'demo',
+    environment: 'dev',
+    ui_selectors: '.trackable, input',
+    suppress_first_view: true
   });
-  tealium_provider.set_account('TestAccount');
-  tealium_provider.set_profile('TestProfile');
-  ...
+  tealiumProvider.setViewIdMap({
+    '/index': function () {
+      return {
+        data1: 1,
+        data2: 2
+      };
+    }
+  });
 });
 ```
 
-TODO: Testing  
+A directive has also been created.
+Specifying a 'tealium' or 'data-tealium' attribute on an element binds it to Tealium's link function on click.
+Additional data can be passed to provide details for the event like normal:
+```html
+<button data-tealium='{"event":"button pressed", "button_name":"button2"}'>
+  Button
+</button>
+```
 
 
 #angularJS TealiumIQ integration
