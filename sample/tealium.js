@@ -15,27 +15,13 @@ app.provider('tealium', function(tealiumDataProvider) {
     },
     setViewIdMap: tealiumDataProvider.setViewIdMap,
     $get: function(tealiumData, $location) {
-      // replaced with tealium_directive
-      // var link = function(udo) {
-      //   var b = {};
-      //   angular.forEach(udo, function(value, key) {
-      //     b[key] = value;
-      //   });
-      //   window.utag.link(b);
-      // };
-
+      if (!config.account || !config.profile) {
+        throw new Exception("Please configure Tealium first");
+      }
       var view = function() {
         var udo = tealiumData.getUdo($location.path());
         if (window.utag){
           window.utag.view(udo);
-          // replaced by tealium_directive
-          // if (config.ui_selectors) {
-          //   angular.element(document.querySelectorAll(config.ui_selectors))
-          //     .bind('click', function(e) {
-          //       var udo = tealiumData.getUdo($location.path(), e);
-          //       link(udo);
-          //     });
-          // }
         }
       };
 
