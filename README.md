@@ -1,3 +1,36 @@
+##Forked version
+This forked repository modifies Tealium's Angular services to use the Provider pattern.
+Providers have the advantage of being available in an application's config block, meaning tealium.js and tealium_data.js do not need to be modified directly. For example:
+```javascript
+app.config(function(tealiumProvider) {
+  tealiumProvider.config({
+    account: 'tealiummobile',
+    profile: 'demo',
+    environment: 'dev',
+    ui_selectors: '.trackable, input',
+    suppress_first_view: true
+  });
+  tealiumProvider.setViewIdMap({
+    '/index': function () {
+      return {
+        data1: 1,
+        data2: 2
+      };
+    }
+  });
+});
+```
+
+A directive has also been created.
+Specifying a 'tealium' or 'data-tealium' attribute on an element binds it to Tealium's link function on click.
+Additional data can be passed to provide details for the event like normal:
+```html
+<button data-tealium='{"event":"button pressed", "button_name":"button2"}'>
+  Button
+</button>
+```
+
+
 #angularJS TealiumIQ integration
 This is a sample module to integrate tealiumIQ into your site easily. The main libraries for tealium are:
 
@@ -15,7 +48,7 @@ app = angular.module('app', ['TealiumHelper']);
 ###Option 1
 In your application controller add the following function to its scope example:
 ```javascript
-app.controller('appController', 
+app.controller('appController',
     function($scope, tealium) {
      $scope.tealiumView = tealium.view;
     }
@@ -37,7 +70,7 @@ You can then use tealiumView() anywhere thats within scope of your app controlle
 ###Option 2
 Alternatively you can include the TealiumHelper module in your route logic and call tealium.view() in your $includeContentLoaded callback example:
 ```javascript
-$scope.$on("$includeContentLoaded", 
+$scope.$on("$includeContentLoaded",
     function () {
       tealium.view();
     });
