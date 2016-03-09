@@ -1,10 +1,10 @@
-##Tealium Angular JS Integration
+##Tealium AngularJS Integration
 Repository modified to use the Provider pattern.
 
 Contributors
 
 - [Evan Van Dam](https://github.com/evandam/integration-angularjs)
-- [Stuart](https://github.com/runfaj/angularJS_tealiumIQ-module)
+- [Stuart](https://github.com/runfaj/angularJS_TealiumIQ-module)
 
 Providers have the advantage of being available in an application's config block, meaning tealium.js and tealium_data.js do not need to be modified directly. For example:
 ```javascript
@@ -35,10 +35,8 @@ Additional data can be passed to provide details for the event like normal:
   Button
 </button>
 ```
-
-
-#angularJS TealiumIQ integration
-This is a sample module to integrate tealiumIQ into your site easily. The main libraries for tealium are:
+#Libraries
+This is a sample module to integrate TealiumIQ into your site easily. The main libraries for Tealium are:
 
 - **tealium.js**
 - **tealium_data.js**
@@ -89,9 +87,9 @@ In **tealium.js** the following items need to be edited. In the '**TealiumConfig
 - **uiSelectors** - (String) CSS selectors for elements you want to add automatic link tracking to. (example: '.trackable, input')
 - **view_id** - (String reference) an object that is a reference or function that returns a unique key for the current view. This key will match the view keys in the 'TealiumUDO' module
 - **data_connector** - (Object) an object representing a set of data that you want to pass to the 'TealiumUDO' module to ingest.
-- **account** (String) tealiumIQ account
-- **profile** (String) tealiumIQ profile
-- **environment** (String) tealiumIQ environment ("dev", "qa", "prod")
+- **account** (String) TealiumIQ account
+- **profile** (String) TealiumIQ profile
+- **environment** (String) TealiumIQ environment ("dev", "qa", "prod")
 
 ###TealiumUDO
 
@@ -100,4 +98,4 @@ In **tealium_data.js** the following items need to be edited. In the '**TealiumU
 - The values are objects with the following format:
   - {'description' : 'description to this view', 'data' : {}}
   - **description** is simply to describe what this object is used for
-  - **data** is the data layer that will be placed on the page for this view and passed to tealiumIQ and processed for you 3rd party vendors
+  - **data** is the data layer that will be placed on the page for this view and passed to TealiumIQ and processed for you 3rd party vendors
