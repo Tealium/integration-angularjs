@@ -1,5 +1,11 @@
-##Forked version
-This forked repository modifies Tealium's Angular services to use the Provider pattern.
+##Tealium Angular JS Integration
+Repository modified to use the Provider pattern.
+
+Contributors
+
+- [Evan Van Dam](https://github.com/evandam/integration-angularjs)
+- [Stuart](https://github.com/runfaj/angularJS_tealiumIQ-module)
+
 Providers have the advantage of being available in an application's config block, meaning tealium.js and tealium_data.js do not need to be modified directly. For example:
 ```javascript
 app.config(function(tealiumProvider) {
