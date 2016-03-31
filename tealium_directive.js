@@ -13,6 +13,12 @@ app.directive('tealium', function($location, tealiumData) {
       element.bind('click', function(e) {
         var udo = tealiumData.getUdo($location.path());
         var target = e.target, event_type, event_text, event_source;
+
+        // Add element-specific data to data layer from "data-tealium" attribute
+        // <input type="button" value="input button" data-tealium='{"event":"input pressed"}'><br>
+        if ( target.dataset && target.dataset.tealium ) {
+          utag.ut.merge( udo, JSON.parse(target.dataset.tealium), 1 );
+        }
         if(target.nodeName) {
           event_type = "" + (target.nodeName.toLowerCase() || target.localName || target.tagName.toLowerCase());
           if(event_type === "a") {

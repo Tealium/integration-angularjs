@@ -13,7 +13,6 @@ app.config(function(tealiumProvider) {
     account: 'tealiummobile',
     profile: 'demo',
     environment: 'dev',
-    ui_selectors: '.trackable, input',
     suppress_first_view: true
   });
   tealiumProvider.setViewIdMap({
@@ -28,8 +27,8 @@ app.config(function(tealiumProvider) {
 ```
 
 A directive has also been created.
-Specifying a 'tealium' or 'data-tealium' attribute on an element binds it to Tealium's link function on click.
-Additional data can be passed to provide details for the event like normal:
+Specifying 'data-tealium' attribute on an element binds this data to Tealium's link function on click.
+Additional data can be passed to provide details for the specific event:
 ```html
 <button data-tealium='{"event":"button pressed", "button_name":"button2"}'>
   Button
@@ -84,18 +83,18 @@ $scope.$on("$includeContentLoaded",
 ###TealiumConfigure
 
 In **tealium.js** the following items need to be edited. In the '**TealiumConfigure**' module there are the following items
-- **uiSelectors** - (String) CSS selectors for elements you want to add automatic link tracking to. (example: '.trackable, input')
-- **view_id** - (String reference) an object that is a reference or function that returns a unique key for the current view. This key will match the view keys in the 'TealiumUDO' module
-- **data_connector** - (Object) an object representing a set of data that you want to pass to the 'TealiumUDO' module to ingest.
 - **account** (String) TealiumIQ account
 - **profile** (String) TealiumIQ profile
 - **environment** (String) TealiumIQ environment ("dev", "qa", "prod")
 
-###TealiumUDO
 
-In **tealium_data.js** the following items need to be edited. In the '**TealiumUDO**' module there is a udo object that are a set of key:value pairs.
-- The keys are strings that match the view_id being passed from '**TealiumConfigure**'
-- The values are objects with the following format:
-  - {'description' : 'description to this view', 'data' : {}}
-  - **description** is simply to describe what this object is used for
-  - **data** is the data layer that will be placed on the page for this view and passed to TealiumIQ and processed for you 3rd party vendors
+## Example
+
+- For an example, see files in /sample folder.  This sample app uses the *Option 2* method described above.
+
+- Any element marked with "data-tealium" will be tracked as a link click event (using utag.link)
+
+- In the /sample/template1.html you can see how utag.link calls fire based on button clicks.  To see the data layer with each call to utag.link, set debug cookie in console: document.cookie="utagdb=true"
+
+- Only a specific set of tags in Tealium's Tag Marketplace support the utag.link event tracking and some (i.e. Google Analytics) will require mapping
+
