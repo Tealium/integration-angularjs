@@ -13,7 +13,6 @@ app.config(function(tealiumProvider) {
     account: 'tealiummobile',
     profile: 'demo',
     environment: 'dev',
-    ui_selectors: '.trackable, input',
     suppress_first_view: true
   });
   tealiumProvider.setViewIdMap({
@@ -84,7 +83,6 @@ $scope.$on("$includeContentLoaded",
 ###TealiumConfigure
 
 In **tealium.js** the following items need to be edited. In the '**TealiumConfigure**' module there are the following items
-- **ui_selectors** - (String) CSS selectors for elements you want to add automatic link tracking to. (example: '.trackable, input')
 - **account** (String) TealiumIQ account
 - **profile** (String) TealiumIQ profile
 - **environment** (String) TealiumIQ environment ("dev", "qa", "prod")
