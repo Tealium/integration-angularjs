@@ -28,8 +28,8 @@ app.config(function(tealiumProvider) {
 ```
 
 A directive has also been created.
-Specifying a 'tealium' or 'data-tealium' attribute on an element binds it to Tealium's link function on click.
-Additional data can be passed to provide details for the event like normal:
+Specifying 'data-tealium' attribute on an element binds this data to Tealium's link function on click.
+Additional data can be passed to provide details for the specific event:
 ```html
 <button data-tealium='{"event":"button pressed", "button_name":"button2"}'>
   Button
@@ -84,18 +84,14 @@ $scope.$on("$includeContentLoaded",
 ###TealiumConfigure
 
 In **tealium.js** the following items need to be edited. In the '**TealiumConfigure**' module there are the following items
-- **uiSelectors** - (String) CSS selectors for elements you want to add automatic link tracking to. (example: '.trackable, input')
-- **view_id** - (String reference) an object that is a reference or function that returns a unique key for the current view. This key will match the view keys in the 'TealiumUDO' module
-- **data_connector** - (Object) an object representing a set of data that you want to pass to the 'TealiumUDO' module to ingest.
+- **ui_selectors** - (String) CSS selectors for elements you want to add automatic link tracking to. (example: '.trackable, input')
 - **account** (String) TealiumIQ account
 - **profile** (String) TealiumIQ profile
 - **environment** (String) TealiumIQ environment ("dev", "qa", "prod")
 
-###TealiumUDO
 
-In **tealium_data.js** the following items need to be edited. In the '**TealiumUDO**' module there is a udo object that are a set of key:value pairs.
-- The keys are strings that match the view_id being passed from '**TealiumConfigure**'
-- The values are objects with the following format:
-  - {'description' : 'description to this view', 'data' : {}}
-  - **description** is simply to describe what this object is used for
-  - **data** is the data layer that will be placed on the page for this view and passed to TealiumIQ and processed for you 3rd party vendors
+## Example
+
+For an example, see files in /sample folder.  Note:  This uses the "Option 2" described above.
+
+
