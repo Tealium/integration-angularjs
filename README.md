@@ -90,6 +90,11 @@ In **tealium.js** the following items need to be edited. In the '**TealiumConfig
 
 ## Example
 
-For an example, see files in /sample folder.  This sample app uses the "Option 2" method described above.
+- For an example, see files in /sample folder.  This sample app uses the *Option 2* method described above.
 
+- Any element marked with "data-tealium" will be tracked as a link click event (using utag.link)
+
+- In the /sample/template1.html you can see how utag.link calls fire based on button clicks.  To see the data layer with each call to utag.link, set debug cookie in console: document.cookie="utagdb=true"
+
+- Only a specific set of tags in Tealium's Tag Marketplace support the utag.link event tracking and some (i.e. Google Analytics) will require mapping
 
