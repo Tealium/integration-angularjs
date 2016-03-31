@@ -92,6 +92,6 @@ In **tealium.js** the following items need to be edited. In the '**TealiumConfig
 
 ## Example
 
-For an example, see files in /sample folder.  Note:  This uses the "Option 2" described above.
+For an example, see files in /sample folder.  This sample app uses the "Option 2" method described above.
 
 
