@@ -9,24 +9,23 @@ app.provider('tealiumData', function() {
     },
     $get: function() {
       return {
-        getUdo: function(view_id) {
-          var udo;
+        getDataLayer: function(view_id) {
+          var dataLayer;
           try {
             if (view_id_map[view_id]){
-              udo = view_id_map[view_id]();
+              dataLayer = view_id_map[view_id]();
             }
             else {
-              udo = view_id_map.generic ? view_id_map.generic() : {};
+              dataLayer = view_id_map.generic ? view_id_map.generic() : {};
             }
           } catch (err) {
             data = {};
-            data.page_type = "generic udo error";
+            data.page_type = "generic dataLayer error";
             data.error_name = err.name;
             data.error_message = err.message;
-            udo = data;
+            dataLayer = data;
           }
-          console.log('got udo: ', udo);
-          return udo;
+          return dataLayer;
         }
       }
     }
