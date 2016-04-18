@@ -9,7 +9,7 @@ app.provider('tealiumData', function() {
     },
     $get: function() {
       return {
-        getUdo: function(view_id) {
+        getDataLayer: function(view_id) {
           var dataLayer;
           try {
             if (view_id_map[view_id]){
