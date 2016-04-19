@@ -1,11 +1,11 @@
 angular.module('App', ['ngAnimate', 'TealiumHelper', 'TealiumHelper.directive'])
   .config(function(tealiumProvider) {
     'use strict';
-    tealiumProvider.config({
+    tealiumProvider.setConfig({
       account: 'tealiummobile',
       profile: 'demo',
       environment: 'dev',
-      suppress_first_view: false
+      suppress_first_view: true
     });
 
     var home = function() {
@@ -64,7 +64,7 @@ angular.module('App', ['ngAnimate', 'TealiumHelper', 'TealiumHelper.directive'])
 */
     $scope.$on("$viewContentLoaded",
       function () {
-        //tealium.view();
+        //tealium.track("view");
       });
 
 /*
@@ -72,7 +72,7 @@ angular.module('App', ['ngAnimate', 'TealiumHelper', 'TealiumHelper.directive'])
 */
     $rootScope.$on('$routeChangeSuccess',
       function(event, toState, toParams, fromState, fromParams){
-        //tealium.view();
+        //tealium.track("view");
       });
 
 /*

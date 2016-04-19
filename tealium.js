@@ -5,14 +5,14 @@ app.provider("tealium", function(tealiumDataProvider) {
     account: "",
     profile: "",
     environment: "dev",
-    suppress_first_view: false
+    suppress_first_view: true
   };
 
   return {
-    config: function(newConfig) {
+    setConfig: function(newConfig) {
       config = newConfig
     },
-    setConfig: function ( key, value ) {
+    setConfigValue: function ( key, value ) {
       config[key] = value
     },
     setViewIdMap: tealiumDataProvider.setViewIdMap,
@@ -21,7 +21,7 @@ app.provider("tealium", function(tealiumDataProvider) {
         throw new Exception("Please configure Tealium first");
       }
 
-      this.setConfig( "script_src", "//tags.tiqcdn.com/utag/"+ config.account + "/"+ config.profile +"/"+ config.environment + "/utag.js" );
+      this.setConfigValue( "script_src", "//tags.tiqcdn.com/utag/"+ config.account + "/"+ config.profile +"/"+ config.environment + "/utag.js" );
 
       var view = function( data ) {
         var data = data || tealiumData.getDataLayer( $location.path() );
@@ -35,20 +35,25 @@ app.provider("tealium", function(tealiumDataProvider) {
 
       var getScript = function ( src, callback ) {
         var d = document;
+        var o = { callback: callback || function(){} };
         var s, t;
-      
+
+        if ( typeof src == "undefined" ) {
+          return;
+        }
+
         if ( typeof jQuery != "undefined" ) {
           // use cross-browser getScript from jQuery by default
           jQuery.ajaxSetup({ cache: true });
-          jQuery.getScript( src, callback );
+          jQuery.getScript( src, o.callback );
         } else {
           s = d.createElement("script");s.language="javascript";s.type="text/javascript";s.async=1;s.charset="utf-8";s.src=src;
-          if ( typeof callback == "function" ) {
+          if ( typeof o.callback == "function" ) {
             if ( d.addEventListener ) {
-              d.addEventListener("load",function(){callback()},false);
+              s.addEventListener("load",function(){o.callback()},false);
             } else {
               // old IE support
-              d.onreadystatechange=function(){if(this.readyState=="complete"||this.readyState=="loaded"){this.onreadystatechange=null;callback()}};
+              s.onreadystatechange=function(){if(this.readyState=="complete"||this.readyState=="loaded"){this.onreadystatechange=null;o.callback()}};
             }
           }
           t = d.getElementsByTagName("script")[0];
@@ -57,7 +62,7 @@ app.provider("tealium", function(tealiumDataProvider) {
 
       };
 
-      var track = function( ev, data) {
+      var track = function( ev, data ) {
         var data = data || tealiumData.getDataLayer( $location.path() );
         var ev = ev || "view";
         var src = config.script_src;
@@ -83,7 +88,7 @@ app.provider("tealium", function(tealiumDataProvider) {
           if ( config.suppress_first_view ) {
             window.utag_cfg_ovrd = { noview : true };
           } else {
-            getScript( config.script );
+            getScript( config.script_src );
           }
         }
       };
