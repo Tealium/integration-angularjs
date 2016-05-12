@@ -2,34 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Example - example-example38-production</title>
-  <link href="animations.css" rel="stylesheet" type="text/css">
+  <title>Example - Tealium AngularJS Integration</title>
+  <link href="./animations.css" rel="stylesheet" type="text/css">
 
-
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
-  <script src="tealium_data.js"></script>
-  <script src="tealium.js"></script>
-  <script src="tealium_directive.js"></script>
-  <script src="script.js"></script>
-
-
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+  <script src="./tealium_data.js"></script>
+  <script src="./tealium.js"></script>
+  <script src="./tealium_directive.js"></script>
+  <script src="./script.js"></script>
 </head>
-<body ng-app="App">
 
-   <div ng-controller="AppController">
+<body ng-app="App" ng-strict-di>
 
-   <select ng-model="template" ng-options="t.name for t in templates" ng-change="updatePath()">
-    <option value="">(blank)</option>
-   </select>
-   url of the template: <tt>{{template.url}}</tt>
-   <hr/>
-   <div class="slide-animate-container">
-     <div ng-view class="slide-animate">
-       <div  ng-include="template.url"></div>
-     </div>
-   </div>
+  <div ng-controller="AppController">
 
- </div>
+    <select ng-model="template" ng-options="t.name for t in templates" ng-change="updatePath()">
+      <option value="">(blank)</option>
+    </select>
+    URL of the template: <tt>{{template.url}}</tt>
+    <hr/>
+    <div class="slide-animate-container">
+      <div ng-view class="slide-animate">
+        <div ng-include="template.url"></div>
+      </div>
+    </div>
+
+  </div>
+
 </body>
 </html>
