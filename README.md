@@ -100,10 +100,11 @@ In **tealium.js** the following items need to be edited. In the '**TealiumConfig
 
 - This module defines tealium.track which is a wrapper to utag.track.
 
-```tealium.track( "view", {
+```javascript
+    tealium.track( "view", {
       page_name : "my page",
       event_name : "my event",
       more_data : "any data"
-   }
+    });
 ```
 
