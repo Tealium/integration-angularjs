@@ -1,5 +1,5 @@
 var app = angular.module('TealiumHelper.directive', ['TealiumHelper']);
-app.directive('tealium', function($location, tealiumData, tealium) {
+app.directive('tealium', ["$location", "tealiumData", "tealium", function($location, tealiumData, tealium) {
   return {
     restrict: 'A',
     // Add element-specific data to data layer from "data-tealium" attribute
@@ -60,4 +60,4 @@ app.directive('tealium', function($location, tealiumData, tealium) {
       });
     }
   };
-});
+}]);

@@ -6,10 +6,10 @@ Contributors
 - [Evan Van Dam](https://github.com/evandam/integration-angularjs)
 - [Stuart](https://github.com/runfaj/angularJS_TealiumIQ-module)
 
-Providers have the advantage of being available in an application's config block, meaning tealium.js and tealium_data.js do not need to be modified directly. For example:
+Providers have the advantage of being available in an application's config block, meaning tealium.js and tealium\_data.js do not need to be modified directly. For example:
 ```javascript
 app.config(function(tealiumProvider) {
-  tealiumProvider.config({
+  tealiumProvider.setConfig({
     account: 'tealiummobile',
     profile: 'demo',
     environment: 'dev',
@@ -97,4 +97,14 @@ In **tealium.js** the following items need to be edited. In the '**TealiumConfig
 - In the /sample/template1.html you can see how utag.link calls fire based on button clicks.  To see the data layer with each call to utag.link, set debug cookie in console: document.cookie="utagdb=true"
 
 - Only a specific set of tags in Tealium's Tag Marketplace support the utag.link event tracking and some (i.e. Google Analytics) will require mapping
+
+- This module defines tealium.track which is a wrapper to utag.track.
+
+```javascript
+    tealium.track( "view", {
+      page_name : "my page",
+      event_name : "my event",
+      more_data : "any data"
+    });
+```
 

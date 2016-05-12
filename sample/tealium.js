@@ -1,6 +1,6 @@
 var app = angular.module("TealiumHelper", ["TealiumHelper.data"]);
 
-app.provider("tealium", function(tealiumDataProvider) {
+app.provider("tealium", ["tealiumDataProvider", function(tealiumDataProvider) {
   var config = {
     account: "",
     profile: "",
@@ -16,7 +16,7 @@ app.provider("tealium", function(tealiumDataProvider) {
       config[key] = value
     },
     setViewIdMap: tealiumDataProvider.setViewIdMap,
-    $get: function(tealiumData, $location) {
+    $get: [ "tealiumData", "$location", function(tealiumData, $location) {
       if (!config.account || !config.profile) {
         throw new Exception("Please configure Tealium first");
       }
@@ -93,9 +93,9 @@ app.provider("tealium", function(tealiumDataProvider) {
         }
       };
 
-    }
+    }]
   };
-});
-app.run(function(tealium) {
+}]);
+app.run(["tealium", function(tealium) {
   tealium.run();
-});
+}]);

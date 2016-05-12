@@ -1,5 +1,5 @@
 angular.module('App', ['ngAnimate', 'TealiumHelper', 'TealiumHelper.directive'])
-  .config(function(tealiumProvider) {
+  .config(["tealiumProvider", function(tealiumProvider) {
     'use strict';
     tealiumProvider.setConfig({
       account: 'tealiummobile',
@@ -37,8 +37,8 @@ angular.module('App', ['ngAnimate', 'TealiumHelper', 'TealiumHelper.directive'])
       '/template2.html' : product,
       'generic'         : generic
     });
-  })
-  .controller('AppController', function($rootScope, $scope, $location, tealium) {
+  }])
+  .controller('AppController', ["$rootScope", "$scope", "$location", "tealium", function($rootScope, $scope, $location, tealium) {
     $scope.templates =
       [ { name: 'template1.html', url: 'template1.html'},
         { name: 'template2.html', url: 'template2.html'},
@@ -81,4 +81,4 @@ angular.module('App', ['ngAnimate', 'TealiumHelper', 'TealiumHelper.directive'])
 */
     //$scope.tealiumView = tealium.view;
 
- });
+ }]);
