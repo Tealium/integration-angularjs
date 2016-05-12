@@ -99,10 +99,11 @@ In **tealium.js** the following items need to be edited. In the '**TealiumConfig
 - Only a specific set of tags in Tealium's Tag Marketplace support the utag.link event tracking and some (i.e. Google Analytics) will require mapping
 
 - This module defines tealium.track which is a wrapper to utag.track.
-``` tealium.track( "view", {
+
+```tealium.track( "view", {
       page_name : "my page",
       event_name : "my event",
       more_data : "any data"
-    }
+   }
 ```
 
