@@ -1,0 +1,24 @@
+{
+  "name": "angular-tealium",
+  "description": "Tealium AngularJS Integration",
+  "main": [
+    "tealium_data.js",
+    "tealium.js",
+    "tealium_directive.js"
+  ],
+  "dependencies": {
+    "angular": ">=1.3.0"
+  },
+  "ignore": [],
+  "keywords": [
+    "tealium",
+    "tags",
+    "analytics",
+    "angular"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Tealium/integration-angularjs.git"
+  }
+}
