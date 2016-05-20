@@ -34,19 +34,20 @@ Additional data can be passed to provide details for the specific event:
   Button
 </button>
 ```
+
 #Libraries
-This is a sample module to integrate TealiumIQ into your site easily. The main libraries for Tealium are:
+This is a sample module to integrate TealiumIQ into your site easily. The main library for Tealium is **tealium_angular.js** which has the following parts
 
-- **tealium.js**
-- **tealium_data.js**
+* TealiumHelper - Loads the Tealium JavaScript (utag.js) file and sets up tracking function (tealium.track)
 
-**tealium.js** - contains the main logic to be called when a route updates or an element who's selector has been added to the config is clicked.
+* TealiumHelper.data - Returns the custom data layer for the specific view
 
-**tealium_data.js** - contains the data object that references each page that you define.
+* TealiumHelper.directive - Add element-specific data to data layer from "data-tealium" element data attribute 
+
 ##Sample usage
 In your app module add the 'TealiumHelper' dependency example:
 ```javascript
-app = angular.module('app', ['TealiumHelper']);
+var app = angular.module('app', ['TealiumHelper']);
 ```
 ###Option 1
 In your application controller add the following function to its scope example:
@@ -80,13 +81,23 @@ $scope.$on("$includeContentLoaded",
 ```
 
 ##Configuring the Tealium Module
-###TealiumConfigure
 
-In **tealium.js** the following items need to be edited. In the '**TealiumConfigure**' module there are the following items
+The follow configuration settings are required
+
 - **account** (String) TealiumIQ account
 - **profile** (String) TealiumIQ profile
 - **environment** (String) TealiumIQ environment ("dev", "qa", "prod")
 
+The example in script.js shows how to configure
+
+```javascript
+  tealiumProvider.setConfig({
+      account: 'myaccount',
+      profile: 'myprofile',
+      environment: 'prod',
+      suppress_first_view: true
+  });
+```
 
 ## Example
 
