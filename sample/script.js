@@ -2,7 +2,7 @@ angular.module('App', ['ngAnimate', 'TealiumHelper', 'TealiumHelper.directive'])
   .config(["tealiumProvider", function(tealiumProvider) {
     'use strict';
     tealiumProvider.setConfig({
-      account: '',
+      account: 'tealiummobile',
       profile: 'demo',
       environment: 'dev',
       suppress_first_view: true
