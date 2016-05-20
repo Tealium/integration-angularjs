@@ -3,8 +3,7 @@ Repository modified to use the Provider pattern.
 
 Contributors
 
-- [Evan Van Dam](https://github.com/evandam/integration-angularjs)
-- [Stuart](https://github.com/runfaj/angularJS_TealiumIQ-module)
+- https://github.com/Tealium/integration-angularjs/graphs/contributors
 
 Providers have the advantage of being available in an application's config block, meaning tealium.js and tealium\_data.js do not need to be modified directly. For example:
 ```javascript
@@ -35,8 +34,8 @@ Additional data can be passed to provide details for the specific event:
 </button>
 ```
 
-#Libraries
-This is a sample module to integrate TealiumIQ into your site easily. The main library for Tealium is **tealium_angular.js** which has the following parts
+#Modules
+This is a sample module to integrate Tealium iQ into your site easily. The main library for Tealium is **tealium_angular.js** which has the following parts
 
 * TealiumHelper - Loads the Tealium JavaScript (utag.js) file and sets up tracking function (tealium.track)
 
@@ -84,9 +83,9 @@ $scope.$on("$includeContentLoaded",
 
 The follow configuration settings are required
 
-- **account** (String) TealiumIQ account
-- **profile** (String) TealiumIQ profile
-- **environment** (String) TealiumIQ environment ("dev", "qa", "prod")
+- **account** (String) Tealium iQ account
+- **profile** (String) Tealium iQ profile
+- **environment** (String) Tealium iQ environment ("dev", "qa", "prod")
 
 The example in script.js shows how to configure
 
