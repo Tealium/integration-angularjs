@@ -8,6 +8,9 @@ angular.module('TealiumHelper.data', [])
     setViewIdMap: function(map) {
       view_id_map = map;
     },
+    addViewIdMapEntry: function( key, func ) {
+      view_id_map[key] = func; 
+    },
     $get: function() {
       return {
         getDataLayer: function(view_id) {
@@ -39,8 +42,6 @@ angular.module('TealiumHelper.data', [])
 angular.module("TealiumHelper", ["TealiumHelper.data"])
 .provider("tealium", ["tealiumDataProvider", function( tealiumDataProvider ) {
   var config = {
-    account: "",
-    profile: "",
     environment: "dev",
     suppress_first_view: true
   };
@@ -53,6 +54,7 @@ angular.module("TealiumHelper", ["TealiumHelper.data"])
       config[key] = value
     },
     setViewIdMap: tealiumDataProvider.setViewIdMap,
+    addViewIdMapEntry: tealiumDataProvider.addViewIdMapEntry,
     $get: [ "tealiumData", "$location", function(tealiumData, $location) {
       if (!config.account || !config.profile) {
         throw new Error("account or profile value not set.  Please configure Tealium first");
@@ -111,13 +113,14 @@ angular.module("TealiumHelper", ["TealiumHelper.data"])
         } else {
           utag.track( ev, data )
         } 
-
       };
 
       return {
         view: view,
         link: link,
         track: track,
+        setViewIdMap : tealiumDataProvider.setViewIdMap,
+        addViewIdMapEntry : tealiumDataProvider.addViewIdMapEntry,
         run: function() {
           if ( typeof utag_data == "undefined" ) {
             window.utag_data = tealiumData.getDataLayer( $location.path() ) || {};
