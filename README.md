@@ -1,5 +1,51 @@
-##Tealium AngularJS Integration
-Repository modified to use the Provider pattern.
+## Tealium AngularJS Integration
+
+## Installation
+
+Using Bower
+
+```
+bower install angular-tealium
+```
+
+Using NPM
+
+```
+npm install https://github.com/Tealium/integration-angularjs
+```
+
+## Using the /sample app
+
+(1) After installation, navigate to your directory where the sample folder is located
+
+```
+cd ./myapp/node_modules/angular-tealium/sample
+```
+
+(2) Update the configuration to your own Tealium account/profile combination
+```
+vi script.js
+
+account: 'UPDATE_TO_YOUR_ACCOUNT',
+profile: 'UPDATE_TO_YOUR_PROFILE',
+
+```
+
+(3) Start up a web server in this directory
+```
+python -m SimpleHTTPServer 8000
+```
+
+(4) Load up http://localhost:8000/ in your web browser
+
+(5) NOTE: Configure tags in Tealium iQ and publish to 'dev' environment if you haven't already
+
+(6) Use proxy tool or Network tab in your browser Console to see your tags fire
+
+
+## Updated
+
+This repository was last modified to use the Provider pattern.
 
 Contributors
 
@@ -34,7 +80,7 @@ Additional data can be passed to provide details for the specific event:
 </button>
 ```
 
-#Modules
+# Modules
 This is a sample module to integrate Tealium iQ into your site easily. The main library for Tealium is **tealium_angular.js** which has the following parts
 
 * TealiumHelper - Loads the Tealium JavaScript (utag.js) file and sets up tracking function (tealium.track)
@@ -43,12 +89,12 @@ This is a sample module to integrate Tealium iQ into your site easily. The main 
 
 * TealiumHelper.directive - Add element-specific data to data layer from "data-tealium" element data attribute 
 
-##Sample usage
+## Sample usage
 In your app module add the 'TealiumHelper' dependency example:
 ```javascript
 var app = angular.module('app', ['TealiumHelper']);
 ```
-###Option 1
+### Option 1
 In your application controller add the following function to its scope example:
 ```javascript
 app.controller('appController',
@@ -70,7 +116,7 @@ You can then use tealiumView() anywhere thats within scope of your app controlle
  < /div >
 < /body >
 ```
-###Option 2
+### Option 2
 Alternatively you can include the TealiumHelper module in your route logic and call tealium.view() in your $includeContentLoaded callback example:
 ```javascript
 $scope.$on("$includeContentLoaded",
@@ -79,7 +125,7 @@ $scope.$on("$includeContentLoaded",
     });
 ```
 
-##Configuring the Tealium Module
+## Configuring the Tealium Module
 
 The follow configuration settings are required
 
