@@ -22,10 +22,11 @@ npm install https://github.com/Tealium/integration-angularjs
 cd ./myapp/node_modules/angular-tealium/sample
 ```
 
-(2) Update the configuration to your own Tealium account/profile combination
+(2) Update the tealiumProvider.setConfig params for 'account' and 'profile' to your own Tealium account/profile combination
 ```
 vi script.js
-
+```
+```
 account: 'UPDATE_TO_YOUR_ACCOUNT',
 profile: 'UPDATE_TO_YOUR_PROFILE',
 
