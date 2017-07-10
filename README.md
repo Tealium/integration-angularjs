@@ -44,7 +44,7 @@ python -m SimpleHTTPServer 8000
 (6) Use proxy tool or Network tab in your browser Console to see your tags fire
 
 
-## Updated
+## Updated to use the Provider pattern
 
 This repository was last modified to use the Provider pattern.
 
