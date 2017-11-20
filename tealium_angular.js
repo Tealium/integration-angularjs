@@ -57,7 +57,10 @@ angular.module("TealiumHelper", ["TealiumHelper.data"])
     addViewIdMapEntry: tealiumDataProvider.addViewIdMapEntry,
     $get: [ "tealiumData", "$location", function(tealiumData, $location) {
       if (!config.account || !config.profile) {
-        throw new Error("account or profile value not set.  Please configure Tealium first");
+        if (config.account || config.profile) console.warn("Tealium configuration not valid. Please check your account and profile");
+        return {
+          run: function() {}
+        };
       }
 
       this.setConfigValue( "script_src", "//tags.tiqcdn.com/utag/"+ config.account + "/"+ config.profile +"/"+ config.environment + "/utag.js" );
