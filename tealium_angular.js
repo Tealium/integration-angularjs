@@ -57,7 +57,7 @@ angular.module("TealiumHelper", ["TealiumHelper.data"])
     addViewIdMapEntry: tealiumDataProvider.addViewIdMapEntry,
     $get: [ "tealiumData", "$location", function(tealiumData, $location) {
       if (!config.account || !config.profile) {
-        if (config.account || config.profile) console.warn("Tealium configuration not valid. Please check your account and profile");
+        if (window.console) console.warn("Tealium configuration not valid. Please check your account and profile");
         return {
           run: function() {}
         };
