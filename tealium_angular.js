@@ -63,7 +63,7 @@ angular.module("TealiumHelper", ["TealiumHelper.data"])
         };
       }
 
-      this.setConfigValue( "script_src", "//tags.tiqcdn.com/utag/"+ config.account + "/"+ config.profile +"/"+ config.environment + "/utag.js" );
+      this.setConfigValue( "script_src", "https://tags.tiqcdn.com/utag/"+ config.account + "/"+ config.profile +"/"+ config.environment + "/utag.js" );
 
       var view = function( data ) {
         var data = data || tealiumData.getDataLayer( $location.path() );

@@ -34,7 +34,7 @@ profile: 'UPDATE_TO_YOUR_PROFILE',
 
 (3) Start up a web server in this directory
 ```
-python -m SimpleHTTPServer 8000
+python -m http.server 8000 --bind 127.0.0.1
 ```
 
 (4) Load up http://localhost:8000/ in your web browser
